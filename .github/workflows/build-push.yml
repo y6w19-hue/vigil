@@ -1,0 +1,52 @@
+name: Build and Push Images
+
+on:
+  push:
+    branches: [main]
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - image: vigil-api
+            context: .
+            dockerfile: api/Dockerfile
+          - image: vigil-streamlit
+            context: .
+            dockerfile: dashboard/Dockerfile
+          - image: vigil-web
+            context: ./web
+            dockerfile: web/Dockerfile
+            build-args: VITE_ABLY_KEY
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push ${{ matrix.image }}
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image }}:latest
+            ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image }}:${{ github.sha }}
+          build-args: ${{ matrix.build-args && format('{0}={1}', matrix.build-args, secrets.VITE_ABLY_KEY) || '' }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

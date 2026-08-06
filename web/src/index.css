@@ -1,0 +1,26 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes:
+    night --default,
+    dark;
+}
+
+[data-theme="dark"] {
+  --color-primary: oklch(0.55 0.13 200);
+  --color-primary-content: oklch(0.98 0.02 200);
+}
+
+@utility animate-slide-in {
+  animation: slide-in 0.3s ease-out;
+
+  @keyframes slide-in {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+}

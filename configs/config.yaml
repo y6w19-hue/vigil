@@ -1,0 +1,81 @@
+seed: 42
+
+paths:
+  raw_data: data/raw/creditcard.csv
+  processed_dir: data/processed
+  models_dir: models
+  figures_dir: reports/figures
+  logs_dir: data
+
+split:
+  test_size: 0.15
+  val_size: 0.15
+  stratify: true
+
+preprocessing:
+  amount_scaler: robust
+  time_feature: hour_of_day
+
+imbalance:
+  strategy: smote
+  sampling_strategy: 0.1
+
+models:
+  logistic:
+    C: 1.0
+    penalty: l2
+    solver: lbfgs
+    max_iter: 1000
+    class_weight: balanced
+  random_forest:
+    n_estimators: 300
+    max_depth: null
+    min_samples_leaf: 2
+    class_weight: balanced_subsample
+    n_jobs: -1
+  xgboost:
+    n_estimators: 300
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_weight: 1
+    eval_metric: aucpr
+    early_stopping_rounds: 50
+  lightgbm:
+    n_estimators: 300
+    max_depth: -1
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    is_unbalance: true
+    metric: average_precision
+  ann:
+    hidden_layers: [128, 64, 32]
+    dropout: 0.3
+    learning_rate: 0.001
+    batch_size: 256
+    epochs: 100
+    patience: 10
+
+cv:
+  n_splits: 5
+  scoring: average_precision
+
+threshold:
+  policy: f1_max
+  cost_fp: 1
+  cost_fn: 50
+
+mlflow:
+  tracking_uri: file:./mlruns
+  experiment_name: fraud_detection
+
+api:
+  host: 0.0.0.0
+  port: 8000
+
+simulator:
+  rate: 5
+  limit: 0
+  shuffle: true
