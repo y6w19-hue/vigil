@@ -14,7 +14,7 @@ services:
       - dev
 
   api:
-    image: ghcr.io/${IMAGE_OWNER:-haseeb}/vigil-api:latest
+    image: ghcr.io/${IMAGE_OWNER:-y6w19-hue}/vigil-api:latest
     ports:
       - "8000:8000"
     volumes:
@@ -32,7 +32,7 @@ services:
       retries: 3
 
   streamlit:
-    image: ghcr.io/${IMAGE_OWNER:-haseeb}/vigil-streamlit:latest
+    image: ghcr.io/${IMAGE_OWNER:-y6w19-hue}/vigil-streamlit:latest
     ports:
       - "8501:8501"
     environment:
@@ -41,7 +41,7 @@ services:
       - api
 
   web:
-    image: ghcr.io/${IMAGE_OWNER:-haseeb}/vigil-web:latest
+    image: ghcr.io/${IMAGE_OWNER:-y6w19-hue}/vigil-web:latest
     ports:
       - "3000:80"
     depends_on:
@@ -65,7 +65,7 @@ services:
       - dev
 
   simulator:
-    image: ghcr.io/${IMAGE_OWNER:-haseeb}/vigil-api:latest
+    image: ghcr.io/${IMAGE_OWNER:-y6w19-hue}/vigil-api:latest
     command:
       ["python", "-m", "alerts.simulator", "--rate", "5", "--limit", "500"]
     volumes:
