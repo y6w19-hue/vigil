@@ -6,12 +6,10 @@ __pycache__
 node_modules
 web/node_modules
 web/dist
-data/raw
-data/processed
+data/raw/creditcard.csv
 data/fraud_alerts.db
-models/*.joblib
-models/*.h5
-models/*.json
+data/alerts.log
+data/transactions.log
 reports/figures
 notebooks/.ipynb_checkpoints
 .env

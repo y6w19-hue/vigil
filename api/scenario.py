@@ -30,6 +30,10 @@ def load_dataset() -> None:
     global _df, _fraud_df, _legit_df
     cfg = load_config()
     raw_path = get_path(cfg, "raw_data")
+    if not raw_path.exists() and raw_path.suffix == ".csv":
+        gz_path = raw_path.with_suffix(".csv.gz")
+        if gz_path.exists():
+            raw_path = gz_path
     if not raw_path.exists():
         processed = get_path(cfg, "processed_dir") / "train.parquet"
         if processed.exists():
@@ -38,7 +42,7 @@ def load_dataset() -> None:
             logger.warning("No dataset found for scenario mapping")
             return
 
-    _df = pd.read_csv(raw_path) if raw_path.suffix == ".csv" else pd.read_parquet(raw_path)
+    _df = pd.read_csv(raw_path) if raw_path.suffix in (".csv", ".gz") else pd.read_parquet(raw_path)
     _fraud_df = _df[_df["Class"] == 1].copy()
     _legit_df = _df[_df["Class"] == 0].copy()
     logger.info(

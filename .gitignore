@@ -13,20 +13,19 @@ dist/
 .env.*
 !.env.example
 
-data/raw/
-data/processed/
+data/raw/*
+!data/raw/creditcard.csv.gz
+data/processed/*
+!data/processed/*.parquet
+data/processed/*.tmp
 data/alerts.log
 data/transactions.log
 data/*.db
 data/test_*.db
 !data/README.md
 
-/models/
 mlruns/
-*.joblib
-*.h5
-*.keras
-*.pkl
+mlartifacts/
 
 reports/figures/
 !reports/figures/.gitkeep

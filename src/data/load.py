@@ -20,6 +20,10 @@ EXPECTED_COLUMNS = [
 def load_raw(path: str | Path | None = None) -> pd.DataFrame:
     cfg = load_config()
     csv_path = Path(path) if path else get_path(cfg, "raw_data")
+    if not csv_path.exists() and csv_path.suffix == ".csv":
+        gz_path = csv_path.with_suffix(".csv.gz")
+        if gz_path.exists():
+            csv_path = gz_path
     if not csv_path.exists():
         raise FileNotFoundError(
             f"Dataset not found at {csv_path}. "
