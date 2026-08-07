@@ -14,6 +14,8 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 COPY . .
 
+RUN python -m scripts.generate_figures || echo "Figure generation skipped (non-fatal)"
+
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV TF_CPP_MIN_LOG_LEVEL=2

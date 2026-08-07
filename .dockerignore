@@ -10,7 +10,6 @@ data/raw/creditcard.csv
 data/fraud_alerts.db
 data/alerts.log
 data/transactions.log
-reports/figures
 notebooks/.ipynb_checkpoints
 .env
 .env.local
