@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useGlobal } from "./store";
-import { IconDashboard, IconSimulate, IconShieldDollar } from "./icons";
+import { IconDashboard, IconSimulate } from "./icons";
+import { VigilLogo } from "./VigilLogo";
 
 export function Header() {
 	const { connected } = useGlobal();
@@ -8,9 +9,16 @@ export function Header() {
 
 	return (
 		<div className="navbar bg-base-200 shadow-sm px-6 gap-4">
-			<div className="flex-1 flex items-center gap-2">
-				<IconShieldDollar size={28} className="text-error" />
-				<h1 className="text-xl font-bold tracking-tight">Vigil</h1>
+			<div className="flex-1 flex items-center gap-2.5">
+				<VigilLogo size={32} />
+				<div className="flex flex-col leading-none">
+					<h1 className="text-3xl tracking-[0.15em] montserrat-regular">
+						VIGIL
+					</h1>
+					<span className="text-[10px] font-medium text-base-content/40 tracking-widest uppercase">
+						Fraud Detection
+					</span>
+				</div>
 			</div>
 
 			<div className="flex-none">

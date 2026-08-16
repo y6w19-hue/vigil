@@ -1,8 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
 @plugin "daisyui" {
   themes:
     night --default,
     dark;
+}
+
+.montserrat-regular {
+  font-family: "Montserrat", system-ui;
+  font-weight: 900;
+  font-style: normal;
 }
 
 [data-theme="dark"] {
@@ -22,5 +29,17 @@
       transform: translateX(0);
       opacity: 1;
     }
+  }
+}
+
+@keyframes vigil-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.7);
   }
 }
